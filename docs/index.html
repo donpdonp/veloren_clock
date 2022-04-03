@@ -6,6 +6,9 @@
 #clock {
   margin: 0 5%;
 }
+#legend {
+  margin: 0 5%;
+}
 .timebar {
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(228,210,18,1) 22%, rgba(252, 156, 84,1) 77%, rgba(2,6,36,1) 100%);
   height: 1em;
@@ -18,21 +21,35 @@
 	Veloren Clock
 	</div>
 	<div id="clock">
-    <span id="hour"></span>:<span id="minute"></span>
+    <span id="arrow">▼</span><span id="hour"></span>:<span id="minute"></span>
 	</div>
   <!-- sunrise 5:30 -->
   <!-- sunset 18:30 -->
   <div class="timebar">
   </div>
+	<div id="legend">
+    <span id="sunrise">sunrise 5:30▲</span>
+    <span id="sunset">▲sunset 18:30</span>
+	</div>
 
 	<script>
-  function clock_refresh() {
-	  var veloren_time = veloren_minutes(new Date()) 
-	  document.getElementById('hour').innerHTML = format_hours(veloren_time)
-	  document.getElementById('minute').innerHTML = format_minutes(veloren_time)
-    var time_bump_percentage = veloren_time / (24*60) * 100
-	  document.getElementById('clock').style.paddingLeft = time_bump_percentage.toFixed(0)+"%"
-  }
+    var sunrise_width = document.getElementById('sunrise').offsetWidth
+    var legend_width = document.getElementById('legend').clientWidth
+    var sunrise_word_percentage = sunrise_width / legend_width * 100
+    var sunrise_percentage = (5*60+30) / 1440 * 100
+    console.log('legend_width', legend_width, 'sunrise_width', sunrise_width)
+	  document.getElementById('sunrise').style.paddingLeft = (sunrise_percentage - sunrise_word_percentage).toFixed(0)+"%"
+    var sunset_percentage = (18*60+30) / 1440 * 100
+	  document.getElementById('sunset').style.paddingLeft = (sunset_percentage - sunrise_percentage).toFixed(0)+"%"
+
+    function clock_refresh() {
+  	  var veloren_time = veloren_minutes(new Date()) 
+  	  document.getElementById('hour').innerHTML = format_hours(veloren_time)
+  	  document.getElementById('minute').innerHTML = format_minutes(veloren_time)
+      var time_bump_percentage = veloren_time / (24*60) * 100
+      time_bump_percentage = time_bump_percentage * 0.9 // fudge factor
+  	  document.getElementById('clock').style.paddingLeft = time_bump_percentage.toFixed(0)+"%"
+    }
   clock_refresh()
   setInterval(clock_refresh, 1000)
 	</script>
