@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="clock.js"></script>
+</head>
+<body>
+  <div>
+	Veloren Clock
+	</div>
+	<div id="clock">
+    <span id="hour"></span>:<span id="minute"></span>
+	</div>
+
+	<script>
+  function clock_refresh() {
+	  var veloren_time = veloren_minutes(new Date())
+	  document.getElementById('hour').innerHTML = Math.floor(veloren_time / 60) % 24
+    var minutes = veloren_time % 60
+    if (minutes < 10) {
+      minutes = "0" + minutes
+    }
+	  document.getElementById('minute').innerHTML = minutes
+  }
+  clock_refresh()
+  setInterval(clock_refresh, 1000)
+	</script>
+</body>
+</html>
