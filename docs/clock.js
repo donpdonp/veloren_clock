@@ -6,7 +6,7 @@ function veloren_minutes(now) {
   var one_ingame_day_in_seconds = one_ingame_day_in_minutes * 60
   var one_ingame_hour_in_seconds = one_ingame_day_in_seconds / 24
   var one_ingame_minute_in_seconds = one_ingame_hour_in_seconds / 60
-  return Math.floor(diff_sec / one_ingame_minute_in_seconds)
+  return Math.floor(diff_sec / one_ingame_minute_in_seconds) % (24*60)
 }
 
 function format_minutes(time) {

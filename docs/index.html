@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
 <script src="clock.js"></script>
+<style>
+#clock {
+  margin: 0 5%;
+}
+.timebar {
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(228,210,18,1) 22%, rgba(252, 156, 84,1) 77%, rgba(2,6,36,1) 100%);
+  height: 1em;
+  margin: 0 5%;
+}
+</style>
 </head>
 <body>
   <div>
@@ -12,12 +22,16 @@
 	</div>
   <!-- sunrise 5:30 -->
   <!-- sunset 18:30 -->
+  <div class="timebar">
+  </div>
 
 	<script>
   function clock_refresh() {
-	  var veloren_time = veloren_minutes(new Date())
+	  var veloren_time = veloren_minutes(new Date()) 
 	  document.getElementById('hour').innerHTML = format_hours(veloren_time)
 	  document.getElementById('minute').innerHTML = format_minutes(veloren_time)
+    var time_bump_percentage = veloren_time / (24*60) * 100
+	  document.getElementById('clock').style.paddingLeft = time_bump_percentage.toFixed(0)+"%"
   }
   clock_refresh()
   setInterval(clock_refresh, 1000)
